@@ -1,6 +1,6 @@
 # Homogeneity.jl
 
-[![Julia](https://img.shields.io/badge/Julia-v1.6+-purple?style=flat-square)](https://julialang.org)
+[![Julia](https://img.shields.io/badge/Julia-v1.3+-purple?style=flat-square)](https://julialang.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 
 **Homogeneity.jl** is a Julia implementation of the Python package
@@ -80,17 +80,23 @@ avoid the allocation overhead of broadcasted temporaries.
 - [Statistics](https://docs.julialang.org/en/v1/stdlib/Statistics/)
 - [Random](https://docs.julialang.org/en/v1/stdlib/Random/)
 
+It requires **Julia 1.3 or later**.
+
 ## Installation
 
-The package is not yet registered in the General registry, so install it
-directly from GitHub:
+Install from the General registry (available once the registration pull
+request is merged):
 
 ```julia
 julia> using Pkg
-julia> Pkg.add(url="https://github.com/mmhs013/Homogeneity.jl.git")
+julia> Pkg.add("Homogeneity")
 ```
 
-Once registered, `Pkg.add("Homogeneity")` will work as well.
+To use the current development version directly from GitHub:
+
+```julia
+julia> Pkg.add(url="https://github.com/mmhs013/Homogeneity.jl.git")
+```
 
 ## Tests
 
