@@ -10,6 +10,10 @@ jobs:
     name: Julia ${{ matrix.julia-version }} - ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
 
+    permissions:
+      contents: read
+      id-token: write
+
     strategy:
       fail-fast: false
       matrix:
@@ -22,24 +26,44 @@ jobs:
           - windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: julia-actions/setup-julia@v2
+      - name: Set up Julia
+        uses: julia-actions/setup-julia@v2
         with:
           version: ${{ matrix.julia-version }}
 
-      - uses: julia-actions/cache@v2
+      - name: Cache Julia packages
+        uses: julia-actions/cache@v2
 
-      - uses: julia-actions/julia-buildpkg@v1
+      - name: Build package
+        uses: julia-actions/julia-buildpkg@v1
 
-      - uses: julia-actions/julia-runtest@v1
+      - name: Run tests
+        uses: julia-actions/julia-runtest@v1
 
-      - uses: julia-actions/julia-processcoverage@v1
+      # Generate coverage only on the latest Julia version
+      # running on Ubuntu.
+      - name: Process coverage
+        uses: julia-actions/julia-processcoverage@v1
         if: matrix.julia-version == '1' && matrix.os == 'ubuntu-latest'
 
-      - uses: codecov/codecov-action@v7
+      # Verify that the coverage report exists.
+      - name: Verify coverage report
+        if: matrix.julia-version == '1' && matrix.os == 'ubuntu-latest'
+        shell: bash
+        run: |
+          echo "Checking coverage report..."
+          ls -lh lcov.info
+          head -n 10 lcov.info
+
+      # Upload coverage using GitHub OIDC authentication.
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v7
         if: matrix.julia-version == '1' && matrix.os == 'ubuntu-latest'
         with:
           files: lcov.info
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: false
+          use_oidc: true
+          fail_ci_if_error: true
+          verbose: true
