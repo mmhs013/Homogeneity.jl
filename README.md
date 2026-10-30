@@ -1,7 +1,6 @@
 # Homogeneity.jl
 
 [![CI](https://github.com/mmhs013/Homogeneity.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/mmhs013/Homogeneity.jl)
-[![codecov](https://codecov.io/gh/mmhs013/Homogeneity.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/mmhs013/Homogeneity.jl)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 
 **Homogeneity.jl** is a Julia implementation of the Python package
