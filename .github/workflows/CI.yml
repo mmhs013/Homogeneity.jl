@@ -43,9 +43,8 @@ jobs:
         if: matrix.julia-version == '1'
 
       - uses: codecov/codecov-action@v5
-        with:
-            token: ${{ secrets.CODECOV_TOKEN }}
         if: matrix.julia-version == '1'
         with:
+        token: ${{ secrets.CODECOV_TOKEN }}
           files: lcov.info
           fail_ci_if_error: false
